@@ -707,6 +707,11 @@ public enum WxApiType {
      * 电商收付通-提现接口-按日下载提现异常文件
      */
     WITHDRAW_BILL("/v3/merchant/fund/withdraw/bill-type/%s"),
+    
+    /**
+     * 申请二级商户资金账单API
+     */
+    E_COMMERCE_FUND_FLOW_BILL("/v3/ecommerce/bill/fundflowbill"),
     /**
      * 申请交易账单
      */
@@ -833,6 +838,14 @@ public enum WxApiType {
      */
     CLOSE_ORDER_BY_NO("/v3/pay/transactions/out-trade-no/%s/close"),
     PARTNER_CLOSE_ORDER_BY_NO("/v3/pay/partner/transactions/out-trade-no/%s/close"),
+    /**
+     * 申请退款
+     */
+    DOMESTIC_REFUNDS("/v3/refund/domestic/refunds"),
+    /**
+     * 查询单笔退款
+     */
+    DOMESTIC_REFUNDS_QUERY("/v3/refund/domestic/refunds/%s"),
 
 
     /**

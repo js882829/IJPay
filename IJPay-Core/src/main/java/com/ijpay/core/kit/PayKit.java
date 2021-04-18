@@ -2,6 +2,8 @@ package com.ijpay.core.kit;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.io.resource.Resource;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
@@ -409,11 +411,21 @@ public class PayKit {
      */
     public static PrivateKey getPrivateKey(String keyPath) throws Exception {
         String originalKey = FileUtil.readUtf8String(keyPath);
+        return getPrivateKeyByKeyContent(originalKey);
+    }
+
+    /**
+     * 获取商户私钥
+     *
+     * @param originalKey 私钥文本内容
+     * @return {@link PrivateKey} 商户私钥
+     * @throws Exception 异常信息
+     */
+    public static PrivateKey getPrivateKeyByKeyContent(String originalKey) throws Exception {
         String privateKey = originalKey
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
-
         return RsaKit.loadPrivateKey(privateKey);
     }
 
@@ -484,5 +496,16 @@ public class PayKit {
         } catch (BadPaddingException | IllegalBlockSizeException e) {
             throw new BadPaddingException("解密失败");
         }
+    }
+
+    /**
+     * 以流的方式读取文件
+     *
+     * @param keyPath 文件相对路径
+     * @return InputStream
+     */
+    public static InputStream getFileToStream(String keyPath) {
+        Resource resource = new ClassPathResource(keyPath);
+        return resource.getStream();
     }
 }
